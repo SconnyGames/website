@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sconny Games — Mobile Games Studio</title>
+  <meta name="description" content="Sconny Games is a mobile games studio crafting fast, fun, and polished experiences." />
+
+  <style>
+    :root{
+      --bg:#070A12;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.10);
+      --txt:#EAF0FF;
+      --muted:rgba(234,240,255,.75);
+      --muted2:rgba(234,240,255,.55);
+      --brand1:#7C5CFF;
+      --brand2:#00D4FF;
+      --ok:#2BE4A6;
+      --border:rgba(255,255,255,.12);
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:26px;
+      --max:1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(900px 500px at 85% 10%, rgba(0,212,255,.25), transparent 60%),
+        radial-gradient(800px 600px at 50% 90%, rgba(43,228,166,.12), transparent 65%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{width:min(var(--max), calc(100% - 40px)); margin:0 auto;}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:999px;
+      background:linear-gradient(90deg, rgba(124,92,255,.18), rgba(0,212,255,.12));
+      border:1px solid var(--border);
+      box-shadow:0 10px 40px rgba(0,0,0,.25);
+      font-size:13px; color:var(--muted);
+    }
+    .dot{width:9px;height:9px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--ok));
+      box-shadow:0 0 18px rgba(43,228,166,.5);
+    }
+
+    /* Nav */
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,18,.55);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      font-weight:700; letter-spacing:.2px;
+    }
+    .mark{
+      width:36px; height:36px; border-radius:12px;
+      background: conic-gradient(from 220deg, var(--brand1), var(--brand2), var(--ok), var(--brand1));
+      box-shadow:0 12px 30px rgba(124,92,255,.22);
+      border:1px solid rgba(255,255,255,.20);
+    }
+    nav ul{display:flex; gap:18px; list-style:none; padding:0; margin:0; align-items:center;}
+    nav a{
+      color:var(--muted);
+      font-size:14px;
+      padding:10px 12px;
+      border-radius:999px;
+      transition: background .18s, color .18s, transform .18s;
+    }
+    nav a:hover{
+      color:var(--txt);
+      background:rgba(255,255,255,.06);
+      transform: translateY(-1px);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      border-radius:999px;
+      padding:12px 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--txt);
+      font-weight:600;
+      transition: transform .18s, background .18s, border-color .18s;
+      box-shadow:0 12px 35px rgba(0,0,0,.35);
+      cursor:pointer;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background:rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.primary{
+      border-color: rgba(124,92,255,.45);
+      background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(0,212,255,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(124,92,255,.70);
+    }
+
+    /* Hero */
+    .hero{
+      padding:68px 0 34px;
+      position:relative;
+    }
+    .gridGlow{
+      position:absolute; inset:-120px -80px auto -80px;
+      height:520px;
+      background:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,1), transparent 65%);
+      opacity:.22;
+      pointer-events:none;
+    }
+    .heroWrap{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:26px;
+      align-items:stretch;
+    }
+    h1{
+      font-size: clamp(34px, 4vw, 52px);
+      line-height:1.05;
+      margin:18px 0 14px;
+      letter-spacing:-.8px;
+    }
+    .lead{
+      font-size:16px;
+      color:var(--muted);
+      line-height:1.6;
+      max-width:58ch;
+    }
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+    .miniRow{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; color:var(--muted2); font-size:13px;}
+    .miniRow b{color:var(--txt); font-weight:650;}
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroCard{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      position:relative;
+    }
+    .heroCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 240px at 20% 10%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(420px 220px at 90% 30%, rgba(0,212,255,.18), transparent 55%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .heroCard > *{position:relative}
+    .statGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .stat{
+      padding:14px;
+      border-radius:16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .stat .k{font-size:12px;color:var(--muted2)}
+    .stat .v{font-size:18px;font-weight:750;margin-top:6px}
+    .badgeRow{display:flex; flex-wrap:wrap; gap:10px; margin-top:4px}
+    .badge{
+      font-size:12px; color:var(--muted);
+      padding:9px 11px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Sections */
+    section{padding:42px 0;}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin-bottom:16px;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size:22px;
+      letter-spacing:-.3px;
+    }
+    .sectionTitle p{
+      margin:0;
+      color:var(--muted);
+      max-width:62ch;
+      font-size:14px;
+      line-height:1.6;
+    }
+    .cards3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .tile{
+      padding:18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow:0 14px 40px rgba(0,0,0,.25);
+    }
+    .tile h3{margin:10px 0 8px; font-size:16px;}
+    .tile p{margin:0; color:var(--muted); line-height:1.6; font-size:14px;}
+    .icon{
+      width:40px; height:40px; border-radius:14px;
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(0,212,255,.10));
+    }
+    .icon svg{opacity:.95}
+
+    /* Praise */
+    .quoteGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .quote{
+      padding:18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    blockquote{margin:0; color:var(--txt); line-height:1.6; font-size:14px;}
+    .who{margin-top:12px; color:var(--muted2); font-size:13px;}
+    .who b{color:var(--txt)}
+
+    /* Contact */
+    .contactWrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    form{
+      display:flex; flex-direction:column; gap:10px;
+      padding:18px;
+    }
+    label{font-size:13px; color:var(--muted); }
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color: var(--txt);
+      outline:none;
+      font-family:var(--font);
+    }
+    textarea{min-height:120px; resize:vertical;}
+    input:focus, textarea:focus{border-color: rgba(0,212,255,.45);}
+    .formRow{
+      display:grid; grid-template-columns: 1fr 1fr; gap:10px;
+    }
+    .contactCard{
+      padding:18px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .contactCard p{margin:0; color:var(--muted); line-height:1.6; font-size:14px;}
+    .contactList{display:flex; flex-direction:column; gap:10px; margin-top:6px;}
+    .contactItem{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      font-size:14px;
+    }
+    .hint{color:var(--muted2); font-size:12px; margin-top:8px;}
+
+    footer{
+      padding:28px 0 38px;
+      color:var(--muted2);
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:26px;
+    }
+    .foot{
+      display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      font-size:13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .heroWrap{grid-template-columns:1fr; }
+      .cards3{grid-template-columns:1fr; }
+      .quoteGrid{grid-template-columns:1fr; }
+      .contactWrap{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          Sconny Games<br/>
+          <span style="font-size:12px;color:var(--muted);font-weight:500;">Mobile Games Studio</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#whatwedo">What we do</a></li>
+          <li><a href="#praise">Praise</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="btn primary" href="#contact">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="gridGlow" aria-hidden="true"></div>
+      <div class="container heroWrap">
+        <div>
+          <span class="pill"><span class="dot"></span> We build polished, high-retention mobile games</span>
+          <h1>Fast to pick up.<br/>Hard to put down.</h1>
+          <p class="lead">
+            Sconny Games is a mobile games studio focused on crisp gameplay, delightful feedback,
+            and iteration speed. We ship with care — the kind of games players keep coming back to.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#praise" aria-label="See praise section">
+              See what people say →
+            </a>
+            <a class="btn" href="#whatwedo" aria-label="Explore what we do">
+              Our approach
+            </a>
+          </div>
+
+          <div class="miniRow">
+            <span><b>Player-first</b> design</span>
+            <span><b>Rapid</b> prototyping</span>
+            <span><b>Live</b> ops mindset</span>
+          </div>
+        </div>
+
+        <aside class="card heroCard" aria-label="Studio highlights">
+          <div class="statGrid">
+            <div class="stat">
+              <div class="k">Focus</div>
+              <div class="v">Mobile-first</div>
+            </div>
+            <div class="stat">
+              <div class="k">Style</div>
+              <div class="v">Clean + Punchy</div>
+            </div>
+            <div class="stat">
+              <div class="k">Goal</div>
+              <div class="v">High retention</div>
+            </div>
+            <div class="stat">
+              <div class="k">Values</div>
+              <div class="v">Craft & speed</div>
+            </div>
+          </div>
+
+          <div class="badgeRow" aria-label="Badges">
+            <span class="badge">Gameplay clarity</span>
+            <span class="badge">Juicy feedback</span>
+            <span class="badge">A/B testing ready</span>
+            <span class="badge">Performance-driven</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="container">
+        <div class="sectionTitle">
+          <h2>About Sconny Games</h2>
+          <p>
+            We make mobile games with simple rules, satisfying depth, and a strong “one more try” loop.
+            Every build is tuned for feel, clarity, and smooth performance.
+          </p>
+        </div>
+
+        <div class="cards3">
+          <div class="tile">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Crafted Feel</h3>
+            <p>Animations, sound cues, and input response are tuned so the game feels “alive” from the first tap.</p>
+          </div>
+
+          <div class="tile">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M4 17l6-6 4 4 6-6" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M20 7v6h-6" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Built to Scale</h3>
+            <p>We design for iteration: rapid prototyping, analytics-ready events, and clean content pipelines.</p>
+          </div>
+
+          <div class="tile">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M7 11h10M7 15h6" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M6 3h12a2 2 0 0 1 2 2v14l-4-3H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Player-First</h3>
+            <p>We obsess over clarity: readable UI, fair difficulty curves, and meaningful progression.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="whatwedo">
+      <div class="container">
+        <div class="sectionTitle">
+          <h2>What we do</h2>
+          <p>
+            From prototype to release, we focus on the parts that make mobile games succeed: retention,
+            performance, and memorable moment-to-moment gameplay.
+          </p>
+        </div>
+
+        <div class="cards3">
+          <div class="tile">
+            <h3>Game Design & Prototyping</h3>
+            <p>Quick prototypes, tight core loops, and rapid iteration until the “fun” is undeniable.</p>
+          </div>
+          <div class="tile">
+            <h3>Polish & Feedback</h3>
+            <p>Juice, VFX, haptics, and audio layered carefully — satisfying without being noisy.</p>
+          </div>
+          <div class="tile">
+            <h3>Launch & Live Ops</h3>
+            <p>Analytics-friendly builds, experiments, and content updates designed to keep players engaged.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="praise">
+      <div class="container">
+        <div class="sectionTitle">
+          <h2>Praise</h2>
+          <p>
+            A few words that capture how we want people to feel after playing Sconny Games titles.
+            (You can replace names/outlets with real ones later.)
+          </p>
+        </div>
+
+        <div class="quoteGrid">
+          <div class="quote">
+            <blockquote>“Sconny Games nails the sweet spot: instantly readable, but surprisingly deep after a few rounds.”</blockquote>
+            <div class="who"><b>Mobile Play Weekly</b> — Feature</div>
+          </div>
+
+          <div class="quote">
+            <blockquote>“Every tap feels intentional. Clean visuals, snappy controls, and that addictive ‘just one more’ energy.”</blockquote>
+            <div class="who"><b>Arcade Pocket</b> — Editor’s Note</div>
+          </div>
+
+          <div class="quote">
+            <blockquote>“A masterclass in polish. The game rewards skill, respects time, and never feels unfair.”</blockquote>
+            <div class="who"><b>Indie Mobile Digest</b> — Review</div>
+          </div>
+
+          <div class="quote">
+            <blockquote>“The pacing is fantastic — short sessions that somehow turn into long ones.”</blockquote>
+            <div class="who"><b>Player</b> — App Store Review</div>
+          </div>
+
+          <div class="quote">
+            <blockquote>“Simple idea, perfect execution. This is the kind of mobile game you recommend to everyone.”</blockquote>
+            <div class="who"><b>Player</b> — Google Play Review</div>
+          </div>
+
+          <div class="quote">
+            <blockquote>“Smooth performance and excellent feedback. It feels premium even in a quick casual format.”</blockquote>
+            <div class="who"><b>Creator Spotlight</b> — Mention</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="sectionTitle">
+          <h2>Contact Us</h2>
+          <p>
+            Business inquiries, publishing, partnerships, or just saying hi — we read everything.
+            Fill the form or use the direct contact details.
+          </p>
+        </div>
+
+        <div class="contactWrap">
+          <div class="card">
+            <form onsubmit="return false;" aria-label="Contact form">
+              <div class="formRow">
+                <div>
+                  <label for="name">Name</label>
+                  <input id="name" name="name" placeholder="Your name" autocomplete="name" />
+                </div>
+                <div>
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" placeholder="you@domain.com" autocomplete="email" />
+                </div>
+              </div>
+
+              <div>
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" placeholder="Partnership / Press / Support" />
+              </div>
+
+              <div>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us what you need..."></textarea>
+              </div>
+
+              <button class="btn primary" type="button" onclick="fakeSubmit()">
+                Send message →
+              </button>
+
+              <div class="hint" id="formHint">
+                This is a static demo form. Connect it to your backend, Formspree, Netlify Forms, or Google Forms to receive messages.
+              </div>
+            </form>
+          </div>
+
+          <div class="card contactCard" aria-label="Direct contact details">
+            <h3 style="margin:0;">Let’s talk</h3>
+            <p>
+              Prefer direct contact? Use the details below. Replace these placeholders with your real email/social links.
+            </p>
+
+            <div class="contactList">
+              <div class="contactItem">
+                <span>Email</span>
+                <span><a href="mailto:hello@sconnygames.com">hello@sconnygames.com</a></span>
+              </div>
+              <div class="contactItem">
+                <span>Business</span>
+                <span><a href="mailto:biz@sconnygames.com">biz@sconnygames.com</a></span>
+              </div>
+              <div class="contactItem">
+                <span>Press Kit</span>
+                <span><a href="#praise">Request link</a></span>
+              </div>
+            </div>
+
+            <p class="hint">
+              Tip: If you want, I can also add “Our Games” (with store badges), a press kit page, and a privacy policy footer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container foot">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="mark" style="width:28px;height:28px;border-radius:10px;"></div>
+          <div>© <span id="year"></span> Sconny Games. All rights reserved.</div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#about">About</a>
+          <a href="#praise">Praise</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // tiny UX niceties
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function fakeSubmit(){
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const hint = document.getElementById("formHint");
+
+      if (name.length === 0 || email.length === 0 || message.length === 0){
+        hint.textContent = "Please fill in Name, Email, and Message.";
+        return;
+      }
+
+      // For a real site, send these to your backend / form provider.
+      hint.textContent = "Thanks! (Demo) Your message is ready to be sent — connect the form to receive emails.";
+      console.log({ name, email, subject, message });
+    }
+  </script>
+</body>
+</html>
